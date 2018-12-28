@@ -1,0 +1,22 @@
+{
+  "name": "realtime-pagination",
+  "version": "1.0.0",
+  "description": "Example of paginating a fast-updating collection.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmatek/realtime-pagination.git"
+  },
+  "keywords": [
+    "realtime",
+    "pagination",
+    "example"
+  ],
+  "author": "Tadej Matek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmatek/realtime-pagination/issues"
+  },
+  "homepage": "https://github.com/tmatek/realtime-pagination#readme"
+}
