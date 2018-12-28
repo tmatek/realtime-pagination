@@ -2,8 +2,10 @@
   "name": "realtime-pagination",
   "version": "1.0.0",
   "description": "Example of paginating a fast-updating collection.",
-  "main": "index.js",
-  "scripts": {},
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tmatek/realtime-pagination.git"
@@ -18,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/tmatek/realtime-pagination/issues"
   },
-  "homepage": "https://github.com/tmatek/realtime-pagination#readme"
+  "homepage": "https://github.com/tmatek/realtime-pagination#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mustache-express": "^1.2.8"
+  }
 }
