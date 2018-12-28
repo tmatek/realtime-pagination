@@ -23,6 +23,8 @@
   "homepage": "https://github.com/tmatek/realtime-pagination#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "mustache-express": "^1.2.8"
+    "moment": "^2.23.0",
+    "mustache-express": "^1.2.8",
+    "sqlite": "^3.0.0"
   }
 }

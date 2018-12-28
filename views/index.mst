@@ -26,6 +26,13 @@
           </tr>
         </thead>
         <tbody>
+          {{#users}}
+          <tr>
+            <td>{{name}}</td>
+            <td>{{reputation}}</td>
+            <td>{{created_at}}</td>
+          </tr>
+          {{/users}}
         </tbody>
       </table>
       <ul class="pagination">
