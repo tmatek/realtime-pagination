@@ -4,6 +4,7 @@ const sqlite = require('sqlite')
 const moment = require('moment')
 const UserCollection = require('./user-collection')
 const { encodeCursor, decodeCursor } = require('./utils')
+const { insertUserLoop, deleteUserLoop, updateUserLoop } = require('./crud')
 
 const createApp = async () => {
   const app = express()
@@ -14,6 +15,11 @@ const createApp = async () => {
   // setup database
   const db = await sqlite.open('./db.sqlite')
   await db.migrate({ force: 'last' })
+
+  // setup random crud generators
+  insertUserLoop(db, 20000)
+  deleteUserLoop(db, 35000)
+  updateUserLoop(db, 10000)
 
   app.get('/', async (req, res) => {
     const { after, before } = req.query
@@ -30,6 +36,8 @@ const createApp = async () => {
       ? collection.popularUsersBackward(pageSize)
       : collection.popularUsersForward(pageSize))
 
+    const isStale = await collection.isCollectionStale()
+
     return res.render('index.mst', {
       users: users.map(user => ({
         ...user,
@@ -37,6 +45,7 @@ const createApp = async () => {
       })),
       after: afterCursor && encodeCursor(afterCursor),
       before: beforeCursor && encodeCursor(beforeCursor),
+      isStale,
     })
   })
 

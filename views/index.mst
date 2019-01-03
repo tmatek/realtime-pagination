@@ -17,6 +17,15 @@
     <div class="container mx-auto" style="width: 70%;">
       <h2>Most popular users</h2>
       <br />
+      {{#isStale}}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          Please note that the data in this table is out-of-date.
+          <a href="/" class="alert-link">Click here</a> to refresh.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {{/isStale}}
       <table class="table">
         <thead>
           <tr>

@@ -73,7 +73,7 @@ class UserCollection {
   }
 
   async isCollectionStale() {
-    const result = await db.get(
+    const result = await this.db.get(
       'select id from users where created_at > ? or deleted_at > ? limit 1',
       this.timestamp,
       this.timestamp
