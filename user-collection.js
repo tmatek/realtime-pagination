@@ -11,6 +11,12 @@ class UserCollection {
     this.reputation = reputation
     this.id = id
     this.timestamp = timestamp
+    this.firstPage = !cursor
+  }
+
+  generateCursor(userPointer) {
+    const { reputation, id } = userPointer
+    return [reputation, id, this.timestamp]
   }
 
   async popularUsersForward(count = 10) {
@@ -20,7 +26,8 @@ class UserCollection {
       where (reputation, id) < (?, ?)
       and created_at < ?
       and (deleted_at is null or deleted_at > ?)
-      limit ?`,
+      limit ?
+      `,
       this.reputation,
       this.id,
       this.timestamp,
@@ -30,7 +37,12 @@ class UserCollection {
 
     const hasNextPage = users.length > count
     if (hasNextPage) users.splice(users.length - 1, 1)
-    return { hasNextPage, users }
+
+    return {
+      afterCursor: hasNextPage && this.generateCursor(users[users.length - 1]),
+      beforeCursor: !this.firstPage && this.generateCursor(users[0]),
+      users,
+    }
   }
 
   async popularUsersBackward(count = 10) {
@@ -40,7 +52,8 @@ class UserCollection {
       where (reputation, id) > (?, ?)
       and created_at < ?
       and (deleted_at is null or deleted_at > ?)
-      limit ?`,
+      limit ?
+      `,
       this.reputation,
       this.id,
       this.timestamp,
@@ -51,7 +64,12 @@ class UserCollection {
     const hasNextPage = users.length > count
     if (hasNextPage) users.splice(users.length - 1, 1)
     users.reverse()
-    return { hasNextPage, users }
+
+    return {
+      beforeCursor: hasNextPage && this.generateCursor(users[0]),
+      afterCursor: users.length && this.generateCursor(users[users.length - 1]),
+      users,
+    }
   }
 
   async isCollectionStale() {
